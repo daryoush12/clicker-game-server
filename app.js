@@ -2,12 +2,15 @@ const GameInstance = require("./Game/GameInstance");
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
-
 const axios = require("axios");
 var cors = require('cors')
 
-/**Setup Server properties */
-var port = process.env.PORT || 5000
+const PORT = process.env.PORT || 3000;
+const INDEX = '/index.html';
+const server = express()
+  .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
 const app = express();
 const io = socketIo(server); // < Interesting!
 
