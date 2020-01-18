@@ -26,7 +26,7 @@ class GameInstance {
   getPlayer(id) {
     for (let i = 0; i < this.Players.length; i++) {
       console.log("Comparing : "+ id +" To "+this.Players[i].name);
-      if (this.Players[i].id == id) return this.Players[i];
+      if (this.Players[i].id == id) return i;
     }
     return null;
   }
@@ -43,18 +43,30 @@ class GameInstance {
   /**Add's a click and checks if player should be given points */
   addClick(id){
       this.clicks += 1;
-      this.getPlayer(id).score -= 1;
+      let playerindex = this.getPlayer(id);
+      this.Players[playerindex].score -= 1;
       console.log(id);
+      if(this.clicks % 500 == 0){
+
+        this.Players[playerindex].score += 250;
+
+        console.log("Player "+  
+        this.Players[playerindex].name + "Was awarded 250 points");
+        
+      }
+      if(this.clicks % 100 == 0 && this.clicks % 500 != 0){
+        this.Players[playerindex].score += 40;
+        console.log("Player "+  
+        this.Players[playerindex].name + "Was awarded 250 points");
+      }
       if (this.clicks % 10 == 0 && this.clicks % 100 != 0){
-         this.getPlayer(id).score += 10; 
+        this.Players[playerindex].score += 5; 
+        console.log("Player "+  
+        this.Players[playerindex].name + "Was awarded 250 points");
       }
-      if(this.clicks % 10 == 0 && this.clicks % 100 == 0){
-        this.getPlayer(id).score += 20;
-      }
+     
+     
   }
-
- 
-
 
   static getInstance() {
     if (!instance) {

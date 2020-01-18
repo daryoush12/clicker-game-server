@@ -54,8 +54,6 @@ io.on("connection", socket => {
     });
   });
 
-
-
   socket.on("disconnect", () => {
     console.log(
       "Player Disconnected " +  GameInstance.getInstance().getPlayer());
