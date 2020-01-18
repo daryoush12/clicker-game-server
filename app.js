@@ -6,7 +6,7 @@ const socketIO = require('socket.io');
 
 const PORT = process.env.PORT || 3000;
 
-const server = express();
+const server = http.createServer(app);
 
 const io = socketIO(server);
 
@@ -14,6 +14,9 @@ const io = socketIO(server);
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
+
+
 
 
 let interval;
