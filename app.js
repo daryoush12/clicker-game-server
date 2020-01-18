@@ -5,7 +5,7 @@ const socketIo = require("socket.io");
 const axios = require("axios");
 
 /**Setup Server properties */
-const port = process.env.PORT || 4001;
+const port = process.env.PORT || 3000;
 const index = require("./routes/index");
 const app = express();
 const server = http.createServer(app);
