@@ -4,25 +4,14 @@ const GameInstance = require("../Game/GameInstance");
 const GameInstancesManager = require("../Game/GameInstance");
 
 
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*.herokuapp.com"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 router.get("/", (req, res ) => {
-    res.send({response: "I am alive."}).status(200);
+    res.send({response: "Connection ok."}).status(200);
 });
-
-router.get("/rooms", (req, res) => {
-
-});
-
-router.post("/rooms/new", (req, res) => {
-
-    var name = req.param('name');
-    var creator = req.param('roomcreator')
-    var test = new GameInstance(name);
-    res.send({"response": test}).status(200);
-  
-
-});
-
-
 
 module.exports = router;
