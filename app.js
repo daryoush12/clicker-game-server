@@ -3,6 +3,7 @@ const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
 const axios = require("axios");
+var cors = require('cors')
 
 /**Setup Server properties */
 const port = process.env.PORT || 3000;
@@ -11,21 +12,19 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server); // < Interesting!
 
-var firebase = require("firebase");
-var fire_instance = firebase.initializeApp({
-  apiKey: "AIzaSyBmRx-yPP-MyLYqqVHJmyROvUFeYoesdGU",
-  authDomain: "clickinggamebase.firebaseapp.com",
-  databaseURL: "https://clickinggamebase.firebaseio.com",
-  projectId: "clickinggamebase",
-  storageBucket: "clickinggamebase.appspot.com",
-  messagingSenderId: "1029882586283",
-  appId: "1:1029882586283:web:24e30c42bdf50215b9c3ee"
-});
+
+app.use(cors())
+
+app.use('/static', express.static(path.join(process.cwd(), '.build')));
 
 app.use(index);
 server.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
+
+
+
+
 
 let interval;
 io.on("connection", socket => {
