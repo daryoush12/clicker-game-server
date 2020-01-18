@@ -1,10 +1,5 @@
 const express = require("Express");
 const router = express.Router();
-const GameInstance = require("../Game/GameInstance");
-const GameInstancesManager = require("../Game/GameInstance");
-
-
-
 
 router.get("/", (req, res ) => {
     res.send({response: "Connection ok."}).status(200);
