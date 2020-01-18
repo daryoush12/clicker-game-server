@@ -16,9 +16,6 @@ server.listen(PORT, () => {
 });
 
 
-const server = http.createServer(app);
-
-
 let interval;
 io.on("connection", socket => {
  
