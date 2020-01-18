@@ -1,22 +1,19 @@
+'use strict';
+
 const GameInstance = require("./Game/GameInstance");
-const express = require("express");
-const http = require("http");
-const socketIo = require("socket.io");
-const axios = require("axios");
-var cors = require('cors')
+const express = require('express');
+const socketIO = require('socket.io');
 
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';
+
 const server = express()
   .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-const app = express();
-const io = socketIo(server); // < Interesting!
+const io = socketIO(server);
 
-app.use(express.static(__dirname + "/"))
 
-app.use(index);
 server.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
