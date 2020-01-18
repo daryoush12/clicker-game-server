@@ -7,15 +7,11 @@ const axios = require("axios");
 var cors = require('cors')
 
 /**Setup Server properties */
-const port = process.env.PORT || 3000;
-const index = require("./routes/index");
+var port = process.env.PORT || 5000
 const app = express();
-const server = http.createServer(app);
 const io = socketIo(server); // < Interesting!
 
-
-app.use(cors());
-app.options('*', cors());
+app.use(express.static(__dirname + "/"))
 
 app.use(index);
 server.listen(port, () => {
@@ -23,7 +19,7 @@ server.listen(port, () => {
 });
 
 
-
+const server = http.createServer(app);
 
 
 let interval;
