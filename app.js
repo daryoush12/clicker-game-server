@@ -6,14 +6,12 @@ const socketIO = require('socket.io');
 
 const PORT = process.env.PORT || 3000;
 
-const server = http.createServer(app);
+const server =  express()
+.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 const io = socketIO(server);
 
 
-server.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
-});
 
 
 
