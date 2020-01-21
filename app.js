@@ -1,26 +1,19 @@
-'use strict';
+"use strict";
 
 const GameInstance = require("./Game/GameInstance");
-const express = require('express');
-const socketIO = require('socket.io');
+const express = require("express");
+const socketIO = require("socket.io");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
-const server =  express()
-.listen(PORT, () => console.log(`Listening on ${PORT}`));
+const server = express().listen(PORT, () =>
+  console.log(`Listening on ${PORT}`)
+);
 
 const io = socketIO(server);
 
-
-
-
-
-
-
 let interval;
 io.on("connection", socket => {
- 
-
   if (interval) {
     clearInterval(interval);
   }
@@ -32,21 +25,23 @@ io.on("connection", socket => {
 
   socket.on("leave", function(data) {
     console.log("Click by " + data.name);
+    GameInstance.getInstance().removePlayer(data.id);
   });
-  
 
   socket.on("join", function(data) {
     console.log("New Player joined with name : " + data.name);
-    GameInstance.getInstance().addPlayer({
-      name: data.name,
-      id: data.id,
-      score: 20
-    });
+    if (!GameInstance.getInstance().isPlayerAlreadyJoined(data.id)) {
+      GameInstance.getInstance().addPlayer({
+        name: data.name,
+        id: data.id,
+        score: 20
+      });
+    }
+    return;
   });
 
   socket.on("disconnect", () => {
-    console.log(
-      "Player Disconnected " +  GameInstance.getInstance().getPlayer());
+    console.log("Player Disconnected");
     //GameInstance.getInstance().removePlayer(socket.id);
   });
 });

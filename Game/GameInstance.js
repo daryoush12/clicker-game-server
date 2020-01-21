@@ -9,7 +9,7 @@ const GameSettings = {
 /** Singleton pattern to maintain one game at all times */
 class GameInstance {
   constructor() {
-    this.Players = [];
+    this.Players = {};
     this.clicks = 0;
   }
 
@@ -17,52 +17,45 @@ class GameInstance {
     return this.Players;
   }
 
+  isPlayerAlreadyJoined(id){
+    return (this.Players[id] ? true : false);
+  }
+
   addPlayer(player) {
-    if (this.Players.length + 1 <= GameSettings.max_players)
-      this.Players.push(player);
-    else throw "Maximum amount of players already reached..";
+    this.Players[player.id] = {
+      name:player.name, 
+      score:player.score
+    };
   }
 
-  getPlayer(id) {
-    for (let i = 0; i < this.Players.length; i++) {
-      console.log("Comparing : "+ id +" To "+this.Players[i].name);
-      if (this.Players[i].id == id) return i;
-    }
-    return null;
-  }
+  
+  getPlayer(id) {return this.Players[id];}
 
-  removePlayer(id) {
-    for (let i = 0; i < this.Players.length; i++) {
-      if (this.Players[i].id == id) {
-            console.log("splicing : "+this.Players[i].id)
-            this.Players.splice(i, 1);
-      }
-    }
-  }
+  removePlayer(id) {delete this.Players[id];}
+
 
   /**Add's a click and checks if player should be given points */
   addClick(id){
       this.clicks += 1;
-      let playerindex = this.getPlayer(id);
-      this.Players[playerindex].score -= 1;
+      this.Players[id].score -= 1;
       console.log(id);
       if(this.clicks % 500 == 0){
 
-        this.Players[playerindex].score += 250;
+        this.Players[id].score += 250;
 
         console.log("Player "+  
-        this.Players[playerindex].name + "Was awarded 250 points");
+        this.Players[id].name + "Was awarded 250 points");
         
       }
       if(this.clicks % 100 == 0 && this.clicks % 500 != 0){
-        this.Players[playerindex].score += 40;
+        this.Players[id].score += 40;
         console.log("Player "+  
-        this.Players[playerindex].name + "Was awarded 250 points");
+        this.Players[id].name + "Was awarded 250 points");
       }
       if (this.clicks % 10 == 0 && this.clicks % 100 != 0){
-        this.Players[playerindex].score += 5; 
+        this.Players[id].score += 5; 
         console.log("Player "+  
-        this.Players[playerindex].name + "Was awarded 250 points");
+        this.Players[id].name + "Was awarded 250 points");
       }
      
      
