@@ -45,9 +45,11 @@ io.on("connection", socket => {
     console.log(
       "Player Disconnected"
     );
+    /*
     if (GameInstance.getInstance().isPlayerAlreadyJoined(socket.id)) 
       setTimeout(removePlayer, 5000, socket.id);
     //GameInstance.getInstance().removePlayer(socket.id);
+    */
   });
 });
 
