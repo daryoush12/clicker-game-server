@@ -54,6 +54,7 @@ class GameInstance {
       }
     }
     this.Players = newDict();
+    
     /*
     console.log("Has player to remove "+this.Players.hasOwnProperty(id))
     if(this.Players.hasOwnProperty(id)){
