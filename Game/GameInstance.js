@@ -18,21 +18,49 @@ class GameInstance {
   }
 
   isPlayerAlreadyJoined(id){
-    return (this.Players[id] ? true : false);
+    return (this.Players[id] == undefined);
+  }
+
+  count(){
+    return Object.keys(this.Players).length;
   }
 
   addPlayer(player) {
     this.Players[player.id] = {
       name:player.name, 
-      score:player.score
+      score: 20,
+      socketid: player.socketid
     };
   }
 
+  getPlayerBySocketId(socketid){
+    for (var key in this.Players) {
+      if(this.Players[key].socketid = socketid) 
+        return this.Players[key];
+    }
+  }
+
+  setPlayerRemovable(socketid, value){
+    this.getPlayerBySocketId(socketid).shouldRemove = value;
+  }
   
   getPlayer(id) {return this.Players[id];}
 
-  removePlayer(id) {delete this.Players[id];}
-
+  removePlayer(id) {
+    var newDict = {};
+    for (var key in this.Players) {
+      if(key != id){
+        newDict[id] = this.Players[id];
+      }
+    }
+    this.Players = newDict();
+    /*
+    console.log("Has player to remove "+this.Players.hasOwnProperty(id))
+    if(this.Players.hasOwnProperty(id)){
+         delete this.Players[id];
+    }return;
+    */
+  }
 
   /**Add's a click and checks if player should be given points */
   addClick(id){

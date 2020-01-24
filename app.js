@@ -30,43 +30,47 @@ io.on("connection", socket => {
 
   socket.on("join", function(data) {
     console.log("New Player joined with name : " + data.name);
-    if (!GameInstance.getInstance().isPlayerAlreadyJoined(data.id)) {
+  //  if (!GameInstance.getInstance().isPlayerAlreadyJoined(data.id)) {
       GameInstance.getInstance().addPlayer({
         name: data.name,
         id: data.id,
-        score: 20
+        score: 20,
+        socketid: socket.id,
       });
-    }
-    return;
+    
+  
   });
 
   socket.on("disconnect", () => {
-    console.log("Player Disconnected");
+    console.log(
+      "Player Disconnected"
+    );
+    if (GameInstance.getInstance().isPlayerAlreadyJoined(socket.id)) 
+      setTimeout(removePlayer, 5000, socket.id);
     //GameInstance.getInstance().removePlayer(socket.id);
   });
 });
+
+const removePlayer = socketid => {
+  
+    var removable = GameInstance.getInstance().getPlayerBySocketId(socketid);
+    console.log(removable);
+    if (removable != undefined) {
+      console.log(
+        removable.name +
+          " is being removed from game due to not reconnecting in allocated time."
+      );
+      GameInstance.getInstance().removePlayer(removable.id);
+      console.log(GameInstance.getInstance().count());
+    }
+  
+};
 
 const getGameStateAndEmit = async socket => {
   try {
     socket.emit("GameInstance", GameInstance.getInstance()); // Emitting a new message. It will be consumed by the client
   } catch (error) {
     console.error(`Error: ${error.code}`);
-  }
-};
-
-const getRoomInstancesAndEmit = async socket => {
-  try {
-    const snapshot = await firebase
-      .firestore()
-      .collection("rooms")
-      .get();
-
-    socket.emit(
-      "Rooms",
-      snapshot.docs.map(doc => doc.data())
-    ); // Emitting a new message. It will be consumed by the client
-  } catch (error) {
-    console.error(`Error Room Instances: ${error.code}`);
   }
 };
 

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "mocha UnitTests/**/*.js"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +17,8 @@
     "firebase": "^7.6.1",
     "socket.io": "^2.3.0",
     "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "mocha": "^7.0.0"
   }
 }
