@@ -35,7 +35,7 @@ class GameInstance {
 
   getPlayerBySocketId(socketid){
     for (var key in this.Players) {
-      if(this.Players[key].socketid = socketid) 
+      if(this.Players[key].socketid == socketid) 
         return this.Players[key];
     }
   }
@@ -44,17 +44,22 @@ class GameInstance {
     this.getPlayerBySocketId(socketid).shouldRemove = value;
   }
   
+  resetPlayer(id){
+    this.Players[id].score = 20;
+  }
+
   getPlayer(id) {return this.Players[id];}
 
   removePlayer(id) {
     var newDict = {};
     for (var key in this.Players) {
-      if(key != id){
-        newDict[id] = this.Players[id];
+      if(this.Players[key].socketid != id){
+        newDict[key] = this.Players[key];
       }
     }
-    this.Players = newDict();
-    
+    console.log(newDict);
+    this.Players = newDict;
+
     /*
     console.log("Has player to remove "+this.Players.hasOwnProperty(id))
     if(this.Players.hasOwnProperty(id)){

@@ -14,10 +14,8 @@ const io = socketIO(server);
 
 let interval;
 io.on("connection", socket => {
-  if (interval) {
-    clearInterval(interval);
-  }
-  interval = setInterval(() => getGameStateAndEmit(socket), 100);
+  
+  interval = setInterval(() => getGameStateAndEmit(socket), 1000);
   socket.on("Click", function(data) {
     console.log("Click by " + data.name + data.id);
     GameInstance.getInstance().addClick(data.id);
@@ -26,6 +24,11 @@ io.on("connection", socket => {
   socket.on("leave", function(data) {
     console.log("Click by " + data.name);
     GameInstance.getInstance().removePlayer(data.id);
+  });
+
+  socket.on("ResetPlayer", function(data) {
+    console.log("Reset player "+data.name);
+    GameInstance.getInstance().resetPlayer(data.id);
   });
 
   socket.on("join", function(data) {
@@ -45,11 +48,14 @@ io.on("connection", socket => {
     console.log(
       "Player Disconnected"
     );
-    /*
+    if (interval) {
+      clearInterval(interval);
+    }
+   
     if (GameInstance.getInstance().isPlayerAlreadyJoined(socket.id)) 
       setTimeout(removePlayer, 5000, socket.id);
     //GameInstance.getInstance().removePlayer(socket.id);
-    */
+    
   });
 });
 
@@ -62,7 +68,7 @@ const removePlayer = socketid => {
         removable.name +
           " is being removed from game due to not reconnecting in allocated time."
       );
-      GameInstance.getInstance().removePlayer(removable.id);
+      GameInstance.getInstance().removePlayer(socketid);
       console.log(GameInstance.getInstance().count());
     }
   
