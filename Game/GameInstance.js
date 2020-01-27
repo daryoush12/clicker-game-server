@@ -88,6 +88,17 @@ class GameInstance {
     */
   }
 
+  removePlayerById(id){
+    var newDict = {};
+    for (var key in this.Players) {
+      if (key != id) {
+        newDict[key] = this.Players[key];
+      }
+    }
+    console.log(newDict);
+    this.Players = newDict;
+  }
+
   /**Add's a click and checks if player should be given points */
   addClick(id) {
     this.clicks += 1;

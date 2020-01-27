@@ -20,8 +20,8 @@ io.on("connection", socket => {
   });
 
   socket.on("leave", function(data) {
-    console.log(data.name+" is leaving the game");
-    GameInstance.getInstance().removePlayer(socket.id);
+    console.log(data.name+" is leaving the game "+socket.id);
+    GameInstance.getInstance().removePlayerById(data.id);
   });
 
   socket.on("ResetPlayer", function(data) {
