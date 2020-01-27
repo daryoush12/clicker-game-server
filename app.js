@@ -51,12 +51,13 @@ io.on("connection", socket => {
     if (interval) {
       clearInterval(interval);
     }
-   
+   /*
     if (GameInstance.getInstance().isPlayerAlreadyJoined(socket.id)) 
       setTimeout(removePlayer, 5000, socket.id);
     //GameInstance.getInstance().removePlayer(socket.id);
     
   });
+  */
 });
 
 const removePlayer = socketid => {

@@ -50,6 +50,7 @@ class GameInstance {
 
   getPlayer(id) {return this.Players[id];}
 
+  /**TODO: Make sure player can still play after connecting in time given to him. */
   removePlayer(id) {
     var newDict = {};
     for (var key in this.Players) {
