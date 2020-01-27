@@ -51,13 +51,12 @@ io.on("connection", socket => {
     if (interval) {
       clearInterval(interval);
     }
-   /*
+   
     if (GameInstance.getInstance().isPlayerAlreadyJoined(socket.id)) 
       setTimeout(removePlayer, 5000, socket.id);
     //GameInstance.getInstance().removePlayer(socket.id);
     
   });
-  */
 });
 
 const removePlayer = socketid => {
@@ -83,9 +82,3 @@ const getGameStateAndEmit = async socket => {
   }
 };
 
-const getPlayerBySocketId = socket => {
-  for (let i = 0; i < GameInstance.players; i++) {
-    if (GameInstance.players[i].id == socket.id) return GameInstance.players[i];
-  }
-  return null;
-};
